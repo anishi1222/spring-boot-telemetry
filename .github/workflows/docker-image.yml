@@ -1,10 +1,10 @@
 name: Docker Image CI
 
 on:
-#   push:
-#     branches: [ "master" ]
-#   pull_request:
-#     branches: [ "master" ]
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
   workflow_dispatch:
 
 concurrency:
@@ -45,7 +45,6 @@ jobs:
           push: true
           context: .
           file: Dockerfile.${{ matrix.target }}
-          ulimit: nofile=5000:5000
           tags: |
             ${{ steps.get-image-tag.outputs.tag1 }}
             ${{ steps.get-image-tag.outputs.tag2 }}
