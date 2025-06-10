@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY pom.xml.azure-dependency ./pom.xml
 COPY src src
+COPY applicationinsights.json ./applicationinsights.json
 
 # compile the native image
 RUN --mount=type=cache,target=/root/.m2 mvn clean package
@@ -15,6 +16,7 @@ FROM ${CORE_IMAGE}
 USER app
 EXPOSE 8080
 COPY --from=build /app/target/spring-boot-telemetry.jar ./app.jar
+COPY --from=build /app/applicationinsights.json ./
 
 # CMD sleep 3 ; exec ./spring-boot-telemetry
 CMD [ "-jar", "app.jar"]

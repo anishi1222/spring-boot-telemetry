@@ -17,6 +17,7 @@ FROM ${CORE_IMAGE}
 USER app
 EXPOSE 8080
 COPY --from=build /app/target/spring-boot-telemetry.jar ./app.jar
+COPY --from=build /app/applicationinsights.json ./
 COPY --from=build /app/agent.jar ./
 
 # CMD sleep 3 ; exec ./spring-boot-telemetry
