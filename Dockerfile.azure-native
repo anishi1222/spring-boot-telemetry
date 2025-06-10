@@ -5,7 +5,7 @@ RUN microdnf install gzip
 RUN curl https://dlcdn.apache.org/maven/maven-3/3.9.10/binaries/apache-maven-3.9.10-bin.tar.gz | tar zx
 WORKDIR /app
 
-COPY pom.xml.grafana ./pom.xml
+COPY pom.xml.azure-native ./pom.xml
 COPY src src
 
 # compile the native image

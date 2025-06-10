@@ -17,7 +17,8 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        target: [azure, grafana]
+        target: [azure-agent]
+#        target: [azure-agent, grafana-agent, azure-dependency, grafana-dependency, azure-native, grafana-native]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
