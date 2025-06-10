@@ -1,11 +1,12 @@
 ARG BUILD_IMAGE=maven:3.9.9-eclipse-temurin-21
 ARG CORE_IMAGE=mcr.microsoft.com/openjdk/jdk:21-distroless
-ARG APPINSIGHTS_VERSION=3.7.3
 
 FROM ${BUILD_IMAGE} AS build
 
 WORKDIR /app
-RUN curl -o agent.jar https://github.com/microsoft/ApplicationInsights-Java/releases/download/${APPINSIGHTS_VERSION}/applicationinsights-agent-${APPINSIGHTS_VERSION}.jar
+ENV APPINSIGHTS_VERSION=3.7.3
+
+RUN wget -O agent.jar https://github.com/microsoft/ApplicationInsights-Java/releases/download/${APPINSIGHTS_VERSION}/applicationinsights-agent-${APPINSIGHTS_VERSION}.jar
 COPY pom.xml.azure-agent ./pom.xml
 COPY applicationinsights.json ./applicationinsights.json
 COPY src src
