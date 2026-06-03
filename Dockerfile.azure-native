@@ -1,17 +1,17 @@
-FROM container-registry.oracle.com/graalvm/native-image:21-muslib-ol9 AS build
+FROM container-registry.oracle.com/graalvm/native-image:25.0.3-ol9-20260421 AS build
 WORKDIR /
 # install maven
 RUN microdnf install gzip
-RUN curl https://dlcdn.apache.org/maven/maven-3/3.9.10/binaries/apache-maven-3.9.10-bin.tar.gz | tar zx
+RUN curl https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz | tar zx
 WORKDIR /app
 
 COPY pom.xml.azure-native ./pom.xml
 COPY src src
 
 # compile the native image
-RUN --mount=type=cache,target=/root/.m2 /apache-maven-3.9.10/bin/mvn clean native:compile -Pnative
+RUN --mount=type=cache,target=/root/.m2 /apache-maven-3.9.16/bin/mvn clean native:compile -Pnative
 
-FROM alpine
+FROM container-registry.oracle.com/os/oraclelinux:9-slim
 EXPOSE 8080
 COPY --from=build /app/target/spring-boot-telemetry .
 # CMD sleep 3 ; exec ./spring-boot-telemetry
