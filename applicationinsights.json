@@ -1,0 +1,22 @@
+{
+  "connectionString": "InstrumentationKey=YOUR_INSTRUMENTATION_KEY;IngestionEndpoint",
+  "role": {
+    "name": "spring-superhero-azure-agent"
+  },
+  "sampling" : {
+    "percentage" : 100
+  },
+  "preview": {
+    "captureControllerSpans": true
+  },
+  "instrumentation": {
+    "logging": {
+      "level": "WARN"
+    },
+    "jdbc": {
+      "masking": {
+        "enabled": false
+      }
+    }
+  }
+}

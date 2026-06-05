@@ -1,0 +1,24 @@
+ARG BUILD_IMAGE=maven:3.9.16-eclipse-temurin-25
+ARG CORE_IMAGE=mcr.microsoft.com/openjdk/jdk:25-distroless
+
+FROM ${BUILD_IMAGE} AS build
+
+WORKDIR /app
+RUN apt-get update && apt-get install -y wget
+ENV APPINSIGHTS_VERSION=3.7.8
+RUN wget -o agent.jar https://github.com/microsoft/ApplicationInsights-Java/releases/download/${APPINSIGHTS_VERSION}/applicationinsights-agent-${APPINSIGHTS_VERSION}.jar
+COPY pom.xml.azure-agent ./pom.xml
+COPY applicationinsights.json ./applicationinsights.json
+COPY src src
+# compile the native image
+RUN --mount=type=cache,target=/root/.m2 mvn clean package
+
+FROM ${CORE_IMAGE}
+USER app
+EXPOSE 8080
+COPY --from=build /app/target/spring-boot-telemetry.jar ./app.jar
+COPY --from=build /app/applicationinsights.json ./
+COPY --from=build /app/agent.jar ./
+
+# CMD sleep 3 ; exec ./spring-boot-telemetry
+CMD [ "-javaagent:./agent.jar", "-jar", "app.jar"]

@@ -13,11 +13,12 @@ concurrency:
 
 jobs:
   build:
-    name: Build Native Image Container for ${{ matrix.target }}
+    name: Build Container for ${{ matrix.target }}
     strategy:
       max-parallel: 2
       matrix:
-        target: [azure, grafana]
+        target: [azure-agent, azure-native, grafana-native]
+#        target: [azure-agent, grafana-agent, azure-dependency, grafana-dependency, azure-native, grafana-native]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
