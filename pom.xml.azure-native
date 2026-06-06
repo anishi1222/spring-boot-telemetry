@@ -111,7 +111,9 @@
         <configuration>
           <buildArgs combine.children="append">
             <buildArg>-Ob</buildArg>
-            <arg>--initialize-at-build-time=org.slf4j.helpers.Reporter</arg>
+            <buildArg>--static</buildArg>
+            <buildArg>--libc=musl</buildArg>
+            <buildArg>--initialize-at-build-time=org.slf4j.helpers.Reporter</buildArg>
             <jvmArgs>-Djava.security.properties=src/main/resources/custom.security</jvmArgs>
           </buildArgs>
         </configuration>
