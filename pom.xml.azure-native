@@ -115,6 +115,7 @@
             <buildArg>--static</buildArg>
             <buildArg>--libc=musl</buildArg>
             <buildArg>--initialize-at-build-time=org.slf4j.helpers.Reporter</buildArg>
+            <buildArg>--initialize-at-build-time=org.slf4j.helpers.Reporter$TargetChoice</buildArg>
             <jvmArgs>-Djava.security.properties=src/main/resources/custom.security</jvmArgs>
           </buildArgs>
         </configuration>
